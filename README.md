@@ -51,16 +51,6 @@ The application uses a `crops` collection to store crop pricing and market infor
 | **market** | Coimbatore Local Market |
 | **trend** | Stable |
 
-Example Firestore document:
-
-```json
-{
-  "name": "Tomato",
-  "price": 32,
-  "unit": "kg",
-  "market": "Coimbatore Local Market",
-  "trend": "Stable"
-}
 Sample crops used during development include **Tomato, Onion, Paddy, and Banana**.
 
 ## 🛠️ Tech Stack
@@ -130,6 +120,7 @@ Sample crops used during development include **Tomato, Onion, Paddy, and Banana*
 ```bash
 git clone https://github.com/gowthamvanjimuthu-cyber/AgriPrice.git
 cd AgriPrice
+```
 
 ### Open Project
 
@@ -154,6 +145,7 @@ Use the following package name:
 
 ```text
 com.example.agriprice
+```
 
 ### 3. Add Firebase Configuration
 
