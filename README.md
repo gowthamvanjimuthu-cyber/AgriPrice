@@ -2,6 +2,8 @@
 
 A modern **Local Crop Price Comparison Android Application** designed to help farmers and users view crop prices, explore agricultural markets, track price trends, manage favorites, set price alerts, and access useful farmer-focused tools from a single mobile platform.
 
+
+🔗 **Live Demo (MVP)** 
 https://gowthamvanjimuthu-cyber.github.io/AgriPrice/
 
 ---
