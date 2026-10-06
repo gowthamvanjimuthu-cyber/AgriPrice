@@ -1,0 +1,1745 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AgriPrice | Local Crop Price Comparison</title>
+
+    <meta name="description"
+          content="AgriPrice is a farmer-focused crop price comparison and agricultural market information platform.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --green: #15803d;
+            --green-dark: #166534;
+            --green-light: #dcfce7;
+            --green-soft: #f0fdf4;
+            --orange: #ea580c;
+            --red: #dc2626;
+            --blue: #2563eb;
+            --yellow: #ca8a04;
+            --dark: #17221b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --border: #e2e8f0;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8faf9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--green-dark);
+            font-weight: 800;
+            font-size: 22px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            background: var(--green-light);
+            border-radius: 12px;
+            font-size: 22px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 6px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 9px 12px;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            background: var(--green-soft);
+            color: var(--green-dark);
+        }
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: var(--green-light);
+            padding: 9px 12px;
+            border-radius: 8px;
+        }
+
+        /* HERO */
+
+        .hero {
+            background:
+                radial-gradient(circle at 85% 20%, rgba(134, 239, 172, 0.3), transparent 30%),
+                linear-gradient(135deg, #f0fdf4, #ffffff 60%);
+            padding: 70px 24px 55px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: var(--green-light);
+            color: var(--green-dark);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 68px);
+            line-height: 1.02;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--green);
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: #475569;
+            font-size: 18px;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--green-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--green-dark);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--green);
+        }
+
+        .hero-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 26px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .hero-card-title strong {
+            font-size: 18px;
+        }
+
+        .live {
+            font-size: 12px;
+            color: var(--green);
+            background: var(--green-light);
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        .mini-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .mini-price:last-child {
+            border-bottom: none;
+        }
+
+        .crop-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .crop-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: var(--green-soft);
+            font-size: 20px;
+        }
+
+        .mini-price small {
+            display: block;
+            color: var(--gray);
+            font-size: 11px;
+        }
+
+        .price {
+            font-weight: 800;
+        }
+
+        .trend-up {
+            color: var(--green);
+        }
+
+        .trend-down {
+            color: var(--red);
+        }
+
+        .trend-stable {
+            color: var(--yellow);
+        }
+
+        /* GENERAL */
+
+        .section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 65px 24px;
+        }
+
+        .section-header {
+            margin-bottom: 28px;
+        }
+
+        .section-label {
+            color: var(--green);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            color: var(--gray);
+            max-width: 700px;
+        }
+
+        /* DASHBOARD */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 13px;
+        }
+
+        /* PRICE SECTION */
+
+        .price-tools {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 230px;
+            position: relative;
+        }
+
+        .search-box input,
+        .filter-select {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 10px;
+            padding: 12px 14px;
+            outline: none;
+        }
+
+        .search-box input:focus,
+        .filter-select:focus {
+            border-color: var(--green);
+        }
+
+        .filter-select {
+            width: 190px;
+        }
+
+        .table-wrapper {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow-x: auto;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th,
+        td {
+            padding: 15px 18px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #475569;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-crop {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .favorite-btn {
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            color: #94a3b8;
+        }
+
+        .favorite-btn.active {
+            color: #eab308;
+        }
+
+        .trend-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .badge-up {
+            background: var(--green-light);
+            color: var(--green-dark);
+        }
+
+        .badge-down {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-stable {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        /* CARDS */
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .info-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+        }
+
+        .info-card-icon {
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            background: var(--green-light);
+            border-radius: 12px;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 7px;
+        }
+
+        .info-card p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* CALCULATOR */
+
+        .calculator {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 28px;
+            align-items: stretch;
+        }
+
+        .calculator-panel,
+        .calculator-result {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            outline: none;
+        }
+
+        .result-box {
+            min-height: 100%;
+            background: linear-gradient(135deg, var(--green-dark), var(--green));
+            color: white;
+            border-radius: 14px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .result-box small {
+            opacity: 0.8;
+        }
+
+        .result-value {
+            font-size: 48px;
+            font-weight: 900;
+            margin: 10px 0;
+        }
+
+        .result-box p {
+            opacity: 0.85;
+        }
+
+        /* ALERT */
+
+        .alert-box {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .alert-box .icon {
+            font-size: 26px;
+        }
+
+        .alert-box h3 {
+            color: #9a3412;
+            margin-bottom: 5px;
+        }
+
+        .alert-box p {
+            color: #7c2d12;
+            font-size: 14px;
+        }
+
+        /* ABOUT */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .feature-list li {
+            padding: 9px 0;
+            color: #475569;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--green);
+            font-weight: 800;
+            margin-right: 10px;
+        }
+
+        .architecture {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .architecture-step {
+            padding: 14px;
+            background: var(--green-soft);
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .arrow {
+            text-align: center;
+            color: var(--green);
+            font-weight: 900;
+            margin: 3px 0;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #132019;
+            color: #d1fae5;
+            padding: 40px 24px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-title {
+            font-size: 21px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        footer p {
+            color: #a7f3d0;
+            font-size: 13px;
+            max-width: 550px;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-right a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .copyright {
+            max-width: 1200px;
+            margin: 28px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* TOAST */
+
+        .toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #17221b;
+            color: white;
+            padding: 13px 17px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: 0.25s;
+            z-index: 2000;
+            font-size: 13px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+            .hero-container,
+            .calculator,
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .nav-links.open {
+                display: flex;
+                position: absolute;
+                left: 20px;
+                right: 20px;
+                top: 70px;
+                flex-direction: column;
+                background: white;
+                padding: 10px;
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                box-shadow: var(--shadow);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding-top: 45px;
+            }
+
+            .section {
+                padding: 45px 18px;
+            }
+
+            .hero h1 {
+                font-size: 44px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .dashboard-grid,
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-right {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#home" class="brand">
+            <span class="brand-icon">🌾</span>
+            AgriPrice
+        </a>
+
+        <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#prices">Prices</a></li>
+            <li><a href="#markets">Markets</a></li>
+            <li><a href="#trends">Trends</a></li>
+            <li><a href="#tools">Farmer Tools</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-container">
+
+        <div>
+            <div class="badge">🌱 Farmer-Focused Digital Platform</div>
+
+            <h1>
+                Know Your<br>
+                <span>Crop Prices.</span>
+            </h1>
+
+            <p>
+                AgriPrice brings crop price comparison, market information,
+                price trends, favorites, alerts, and farmer tools together
+                in one simple platform.
+            </p>
+
+            <div class="hero-buttons">
+                <button class="btn btn-primary"
+                        onclick="scrollToSection('prices')">
+                    Explore Crop Prices
+                </button>
+
+                <button class="btn btn-secondary"
+                        onclick="scrollToSection('tools')">
+                    Open Farmer Tools
+                </button>
+            </div>
+        </div>
+
+        <div class="hero-card">
+
+            <div class="hero-card-title">
+                <strong>Today's Crop Prices</strong>
+                <span class="live">MVP DATA</span>
+            </div>
+
+            <div class="mini-price">
+                <div class="crop-name">
+                    <div class="crop-icon">🍅</div>
+                    <div>
+                        <strong>Tomato</strong>
+                        <small>Coimbatore Market</small>
+                    </div>
+                </div>
+                <div>
+                    <div class="price">₹32/kg</div>
+                    <small class="trend-up">↑ Rising</small>
+                </div>
+            </div>
+
+            <div class="mini-price">
+                <div class="crop-name">
+                    <div class="crop-icon">🧅</div>
+                    <div>
+                        <strong>Onion</strong>
+                        <small>Coimbatore Market</small>
+                    </div>
+                </div>
+                <div>
+                    <div class="price">₹28/kg</div>
+                    <small class="trend-stable">→ Stable</small>
+                </div>
+            </div>
+
+            <div class="mini-price">
+                <div class="crop-name">
+                    <div class="crop-icon">🌾</div>
+                    <div>
+                        <strong>Paddy</strong>
+                        <small>Pollachi Market</small>
+                    </div>
+                </div>
+                <div>
+                    <div class="price">₹24/kg</div>
+                    <small class="trend-down">↓ Falling</small>
+                </div>
+            </div>
+
+            <div class="mini-price">
+                <div class="crop-name">
+                    <div class="crop-icon">🍌</div>
+                    <div>
+                        <strong>Banana</strong>
+                        <small>Mettupalayam Market</small>
+                    </div>
+                </div>
+                <div>
+                    <div class="price">₹38/kg</div>
+                    <small class="trend-up">↑ Rising</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="section" id="dashboard">
+
+    <div class="section-header">
+        <div class="section-label">Dashboard</div>
+        <h2 class="section-title">Agricultural Price Overview</h2>
+        <p class="section-description">
+            A centralized view of the crop and market information available
+            in the AgriPrice MVP.
+        </p>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">🌾</div>
+            <div class="stat-value">4</div>
+            <div class="stat-label">Sample Crops</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🏪</div>
+            <div class="stat-value">3</div>
+            <div class="stat-label">Markets</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-value">2</div>
+            <div class="stat-label">Rising Crops</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-value" id="favoriteCount">0</div>
+            <div class="stat-label">Favorites</div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CROP PRICES -->
+<section class="section" id="prices">
+
+    <div class="section-header">
+        <div class="section-label">Crop Prices</div>
+        <h2 class="section-title">Compare Local Crop Prices</h2>
+        <p class="section-description">
+            Search and filter available crops by name, market, or price trend.
+        </p>
+    </div>
+
+    <div class="price-tools">
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search crop or market..."
+                oninput="filterCrops()">
+        </div>
+
+        <select class="filter-select"
+                id="trendFilter"
+                onchange="filterCrops()">
+            <option value="all">All Trends</option>
+            <option value="Rising">Rising</option>
+            <option value="Falling">Falling</option>
+            <option value="Stable">Stable</option>
+        </select>
+
+    </div>
+
+    <div class="table-wrapper">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Crop</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Market</th>
+                    <th>Trend</th>
+                    <th>Favorite</th>
+                </tr>
+            </thead>
+
+            <tbody id="cropTable"></tbody>
+        </table>
+
+    </div>
+</section>
+
+<!-- MARKETS -->
+<section class="section" id="markets">
+
+    <div class="section-header">
+        <div class="section-label">Markets</div>
+        <h2 class="section-title">Explore Agricultural Markets</h2>
+        <p class="section-description">
+            View sample market information represented in the AgriPrice MVP.
+        </p>
+    </div>
+
+    <div class="cards-grid">
+
+        <div class="info-card">
+            <div class="info-card-icon">🏪</div>
+            <h3>Coimbatore Local Market</h3>
+            <p>
+                Available crops include Tomato and Onion with
+                their corresponding price and trend information.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">🌾</div>
+            <h3>Pollachi Market</h3>
+            <p>
+                Agricultural market information with sample
+                Paddy pricing and trend data.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">🍌</div>
+            <h3>Mettupalayam Market</h3>
+            <p>
+                Sample Banana pricing information represented
+                for market comparison.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- TRENDS -->
+<section class="section" id="trends">
+
+    <div class="section-header">
+        <div class="section-label">Price Trends</div>
+        <h2 class="section-title">Understand Price Movement</h2>
+        <p class="section-description">
+            AgriPrice categorizes available crop information into
+            rising, falling, and stable trends.
+        </p>
+    </div>
+
+    <div class="cards-grid">
+
+        <div class="info-card">
+            <div class="info-card-icon">📈</div>
+            <h3 class="trend-up">Rising Prices</h3>
+            <p>
+                Tomato and Banana are represented as rising in
+                the current sample dataset.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">📉</div>
+            <h3 class="trend-down">Falling Prices</h3>
+            <p>
+                Paddy is represented as falling in the current
+                sample dataset.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">→</div>
+            <h3 class="trend-stable">Stable Prices</h3>
+            <p>
+                Onion is represented as stable in the current
+                sample dataset.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- FAVORITES & ALERTS -->
+<section class="section">
+
+    <div class="section-header">
+        <div class="section-label">Personal Tools</div>
+        <h2 class="section-title">Favorites & Price Alerts</h2>
+        <p class="section-description">
+            Save frequently monitored crops and create target-price alerts.
+        </p>
+    </div>
+
+    <div class="cards-grid">
+
+        <div class="info-card">
+            <div class="info-card-icon">⭐</div>
+            <h3>Favorites</h3>
+            <p>
+                Click the star beside a crop to save it as a favorite.
+                Favorites are stored locally in this web MVP.
+            </p>
+            <br>
+            <button class="btn btn-primary"
+                    onclick="showToast('Favorite feature is active in this MVP.')">
+                Try Favorites
+            </button>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">🔔</div>
+            <h3>Price Alerts</h3>
+
+            <div class="form-group">
+                <label for="alertCrop">Crop</label>
+                <select id="alertCrop">
+                    <option>Tomato</option>
+                    <option>Onion</option>
+                    <option>Paddy</option>
+                    <option>Banana</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="alertPrice">Target Price (₹/kg)</label>
+                <input id="alertPrice" type="number" placeholder="Enter target price">
+            </div>
+
+            <button class="btn btn-primary"
+                    onclick="createAlert()">
+                Set Alert
+            </button>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">📱</div>
+            <h3>Android Application</h3>
+            <p>
+                The complete AgriPrice concept is designed as an Android
+                application using Kotlin, Jetpack Compose, Firebase
+                Authentication, and Cloud Firestore.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- FARMER TOOLS -->
+<section class="section" id="tools">
+
+    <div class="section-header">
+        <div class="section-label">Farmer Tools</div>
+        <h2 class="section-title">Crop Value Calculator</h2>
+        <p class="section-description">
+            Estimate crop value using quantity and price per unit.
+        </p>
+    </div>
+
+    <div class="calculator">
+
+        <div class="calculator-panel">
+
+            <div class="form-group">
+                <label for="calculatorCrop">Select Crop</label>
+
+                <select id="calculatorCrop"
+                        onchange="updateCalculatorPrice()">
+                    <option value="32">Tomato</option>
+                    <option value="28">Onion</option>
+                    <option value="24">Paddy</option>
+                    <option value="38">Banana</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity (kg)</label>
+
+                <input
+                    id="quantity"
+                    type="number"
+                    min="0"
+                    value="10"
+                    oninput="calculateValue()">
+            </div>
+
+            <div class="form-group">
+                <label for="unitPrice">Price per kg (₹)</label>
+
+                <input
+                    id="unitPrice"
+                    type="number"
+                    min="0"
+                    value="32"
+                    oninput="calculateValue()">
+            </div>
+
+            <button class="btn btn-primary"
+                    onclick="calculateValue()">
+                Calculate Value
+            </button>
+
+        </div>
+
+        <div class="calculator-result">
+
+            <div class="result-box">
+
+                <small>Estimated Crop Value</small>
+
+                <div class="result-value"
+                     id="resultValue">
+                    ₹320
+                </div>
+
+                <p>
+                    Calculated using:
+                    <strong id="resultQuantity">10 kg</strong>
+                    ×
+                    <strong id="resultPrice">₹32/kg</strong>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- AGRICULTURE UPDATES -->
+<section class="section">
+
+    <div class="section-header">
+        <div class="section-label">Agriculture Updates</div>
+        <h2 class="section-title">Farmer-Focused Information</h2>
+        <p class="section-description">
+            A dedicated section for agricultural information and useful tips.
+        </p>
+    </div>
+
+    <div class="cards-grid">
+
+        <div class="info-card">
+            <div class="info-card-icon">🌱</div>
+            <h3>Crop Monitoring</h3>
+            <p>
+                Regularly monitor crop prices and market information
+                to understand changes in available pricing data.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">📊</div>
+            <h3>Price Awareness</h3>
+            <p>
+                Comparing prices across markets can provide a clearer
+                view of the pricing information available to users.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">💡</div>
+            <h3>Digital Agriculture</h3>
+            <p>
+                Mobile applications can provide convenient access to
+                agricultural information through a single platform.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="section" id="about">
+
+    <div class="about-grid">
+
+        <div>
+            <div class="section-label">About AgriPrice</div>
+
+            <h2 class="section-title">
+                A Simple Digital Platform for Agricultural Information
+            </h2>
+
+            <p class="section-description">
+                AgriPrice is designed as a farmer-focused crop price
+                comparison Android application. The project combines
+                modern Android development with Firebase cloud services.
+            </p>
+
+            <ul class="feature-list">
+                <li>Kotlin-based Android application</li>
+                <li>Jetpack Compose user interface</li>
+                <li>Material 3 design system</li>
+                <li>Firebase Authentication</li>
+                <li>Cloud Firestore database</li>
+                <li>Repository-based architecture</li>
+                <li>Crop price comparison and market exploration</li>
+                <li>Farmer-focused utilities</li>
+            </ul>
+        </div>
+
+        <div class="architecture">
+
+            <h3 style="margin-bottom:18px;">
+                Application Architecture
+            </h3>
+
+            <div class="architecture-step">
+                👨‍🌾 User
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="architecture-step">
+                📱 Jetpack Compose UI
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="architecture-step">
+                ⚙️ Application Logic
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="architecture-step">
+                📦 Repository Layer
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="architecture-step">
+                🔥 Firebase Authentication + Cloud Firestore
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- LIMITATION NOTICE -->
+<section class="section">
+
+    <div class="alert-box">
+
+        <div class="icon">ℹ️</div>
+
+        <div>
+            <h3>MVP Demonstration</h3>
+
+            <p>
+                This GitHub Pages version is a web-based MVP demonstration
+                of the AgriPrice concept. The displayed crop prices are
+                sample development data. The full project is designed as
+                an Android application with Firebase Authentication and
+                Cloud Firestore integration. Live agricultural market API
+                integration is planned as future work.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="footer-container">
+
+        <div>
+            <div class="footer-title">🌾 AgriPrice</div>
+
+            <p>
+                Local Crop Price Comparison and Farmer Support
+                Android Application.
+            </p>
+        </div>
+
+        <div class="footer-right">
+
+            <p>Developed by</p>
+
+            <a href="https://github.com/gowthamvanjimuthu-cyber"
+               target="_blank">
+                Gowtham K
+            </a>
+
+            <p>Android Development | Kotlin | Jetpack Compose | Firebase</p>
+
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        © 2026 AgriPrice. Educational Mobile Application Development Project.
+    </div>
+
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+
+    /* =========================
+       SAMPLE CROP DATA
+       ========================= */
+
+    const crops = [
+        {
+            id: 1,
+            name: "Tomato",
+            icon: "🍅",
+            price: 32,
+            unit: "kg",
+            market: "Coimbatore Local Market",
+            trend: "Rising"
+        },
+        {
+            id: 2,
+            name: "Onion",
+            icon: "🧅",
+            price: 28,
+            unit: "kg",
+            market: "Coimbatore Local Market",
+            trend: "Stable"
+        },
+        {
+            id: 3,
+            name: "Paddy",
+            icon: "🌾",
+            price: 24,
+            unit: "kg",
+            market: "Pollachi Market",
+            trend: "Falling"
+        },
+        {
+            id: 4,
+            name: "Banana",
+            icon: "🍌",
+            price: 38,
+            unit: "kg",
+            market: "Mettupalayam Market",
+            trend: "Rising"
+        }
+    ];
+
+
+    /* =========================
+       FAVORITES
+       ========================= */
+
+    let favorites =
+        JSON.parse(localStorage.getItem("agripriceFavorites") || "[]");
+
+    function saveFavorites() {
+        localStorage.setItem(
+            "agripriceFavorites",
+            JSON.stringify(favorites)
+        );
+    }
+
+    function toggleFavorite(id) {
+
+        if (favorites.includes(id)) {
+
+            favorites = favorites.filter(
+                favoriteId => favoriteId !== id
+            );
+
+            showToast("Removed from favorites.");
+
+        } else {
+
+            favorites.push(id);
+
+            showToast("Added to favorites.");
+        }
+
+        saveFavorites();
+        updateFavoriteCount();
+        renderCrops();
+    }
+
+    function updateFavoriteCount() {
+        document.getElementById("favoriteCount").textContent =
+            favorites.length;
+    }
+
+
+    /* =========================
+       CROP TABLE
+       ========================= */
+
+    function renderCrops(data = crops) {
+
+        const table = document.getElementById("cropTable");
+
+        if (data.length === 0) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="6"
+                        style="text-align:center;padding:30px;color:#64748b;">
+                        No crops found.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        table.innerHTML = data.map(crop => {
+
+            let trendClass = "badge-stable";
+
+            if (crop.trend === "Rising") {
+                trendClass = "badge-up";
+            }
+
+            if (crop.trend === "Falling") {
+                trendClass = "badge-down";
+            }
+
+            const active =
+                favorites.includes(crop.id)
+                    ? "active"
+                    : "";
+
+            return `
+                <tr>
+
+                    <td>
+                        <div class="table-crop">
+                            <span class="crop-icon">
+                                ${crop.icon}
+                            </span>
+
+                            ${crop.name}
+                        </div>
+                    </td>
+
+                    <td>
+                        <strong>₹${crop.price}</strong>
+                    </td>
+
+                    <td>
+                        ${crop.unit}
+                    </td>
+
+                    <td>
+                        ${crop.market}
+                    </td>
+
+                    <td>
+                        <span class="trend-badge ${trendClass}">
+                            ${crop.trend}
+                        </span>
+                    </td>
+
+                    <td>
+                        <button
+                            class="favorite-btn ${active}"
+                            onclick="toggleFavorite(${crop.id})"
+                            title="Toggle favorite">
+                            ★
+                        </button>
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+    }
+
+
+    /* =========================
+       SEARCH & FILTER
+       ========================= */
+
+    function filterCrops() {
+
+        const search =
+            document.getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+        const trend =
+            document.getElementById("trendFilter").value;
+
+        const filtered = crops.filter(crop => {
+
+            const matchesSearch =
+                crop.name.toLowerCase().includes(search) ||
+                crop.market.toLowerCase().includes(search);
+
+            const matchesTrend =
+                trend === "all" ||
+                crop.trend === trend;
+
+            return matchesSearch && matchesTrend;
+        });
+
+        renderCrops(filtered);
+    }
+
+
+    /* =========================
+       CALCULATOR
+       ========================= */
+
+    function updateCalculatorPrice() {
+
+        const select =
+            document.getElementById("calculatorCrop");
+
+        const price =
+            select.value;
+
+        document.getElementById("unitPrice").value =
+            price;
+
+        calculateValue();
+    }
+
+    function calculateValue() {
+
+        const quantity =
+            parseFloat(
+                document.getElementById("quantity").value
+            ) || 0;
+
+        const price =
+            parseFloat(
+                document.getElementById("unitPrice").value
+            ) || 0;
+
+        const total =
+            quantity * price;
+
+        document.getElementById("resultValue").textContent =
+            "₹" + total.toLocaleString("en-IN");
+
+        document.getElementById("resultQuantity").textContent =
+            quantity + " kg";
+
+        document.getElementById("resultPrice").textContent =
+            "₹" + price + "/kg";
+    }
+
+
+    /* =========================
+       PRICE ALERT
+       ========================= */
+
+    function createAlert() {
+
+        const crop =
+            document.getElementById("alertCrop").value;
+
+        const price =
+            document.getElementById("alertPrice").value;
+
+        if (!price || Number(price) <= 0) {
+
+            showToast("Please enter a valid target price.");
+
+            return;
+        }
+
+        localStorage.setItem(
+            "agripriceAlert",
+            JSON.stringify({
+                crop: crop,
+                price: Number(price)
+            })
+        );
+
+        showToast(
+            `Alert set for ${crop} at ₹${price}/kg.`
+        );
+    }
+
+
+    /* =========================
+       NAVIGATION
+       ========================= */
+
+    function scrollToSection(id) {
+
+        document.getElementById(id)
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+    }
+
+
+    function toggleMenu() {
+
+        document
+            .getElementById("navLinks")
+            .classList.toggle("open");
+    }
+
+
+    /* =========================
+       TOAST MESSAGE
+       ========================= */
+
+    let toastTimer;
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        toast.textContent =
+            message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 2500);
+    }
+
+
+    /* =========================
+       INITIALIZE
+       ========================= */
+
+    renderCrops();
+
+    updateFavoriteCount();
+
+    calculateValue();
+
+</script>
+
+</body>
+</html>
+```
