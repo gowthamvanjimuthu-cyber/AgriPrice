@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1048137488466",
+    "project_id": "agriprice-1841f",
+    "storage_bucket": "agriprice-1841f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048137488466:android:6315b4d6789e53c003a78b",
+        "android_client_info": {
+          "package_name": "com.example.agriprice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOfboP-QkWL7OIKjk4ismbeaOiGTkecFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
